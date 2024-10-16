@@ -105,7 +105,7 @@ public class BSTree<T extends Comparable<T>> {
 	/**
 	 * this function will handle searching for a range of values within our tree
 	 * 
-	 * @return whether or not found and printed
+	 * @return whether or not found and printed 
 	 */
 	public boolean searchAndPrintRange()
 	{
