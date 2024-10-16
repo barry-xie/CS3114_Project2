@@ -1,0 +1,26 @@
+What classes I might need:
+BST and their implementation
+I would likely need multiple BSTs, one for each type of search that we're gonna be using
+probably nodes for the BST (then they contain seminars)
+BINTree but i can hold off on this
+this one will be for the last kind of search (will be 2d)
+
+Command Processor/controller from project 1
+Command Processor will parse calls and invoke correct command 
+Controller will then process that command (should pass the tree that we're operating on, for find and delete)
+	for insert, controller should call insert for each of our 5 trees
+	this means it should also create a seminar, and 5 nodes each corresponding to a tree
+	
+for search:
+	im going to try using the same search function in controller for all trees
+	for searches through a range, or that return multiple nodes, how do i print them all?
+	
+	
+for insert:
+	how do i want to handle duplicate inserts?
+	linked list through BSTNode in case i wanna reuse this BSTree code
+		(some self balancing trees dont like other solutions)
+
+		
+for print:
+	
