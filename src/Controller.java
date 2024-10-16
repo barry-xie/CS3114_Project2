@@ -8,8 +8,9 @@ import java.util.List;
  * 
  * @author Barry Xie
  * @version 2024.9.10
+ * @param <T>
  */
-public class Controller {
+public class Controller<T extends Comparable<T>> {
 	private BSTree<Integer> IDTree;
 	private BSTree<Integer> costTree;
 	private BSTree<String> dateTree;
@@ -49,7 +50,7 @@ public class Controller {
 		// check if seminar is already in system
 		// could split this off before reading seminar info for optimal runtime/space
 		// efficiency
-		if (IDTree != null && IDTree.search(ID) != null) {
+		if (IDTree != null && IDTree.search(IDTree.getRoot(), ID) != null) {
 			System.out.println("Insert FAILED - There is already a record with ID " + ID);
 			return;
 		}
@@ -92,25 +93,33 @@ public class Controller {
 	/**
 	 * search IDTree for a seminar with the given ID. remove seminar from tree if
 	 * found, otherwise error
+	 * @param <T>
 	 * 
 	 * @param ID
 	 */
 	public void delete(int ID) {
+		BSTNode<Integer> curr = IDTree.search(IDTree.getRoot(), ID);
+		
 		// if seminar doesnt exist
-		if (IDTree.search(ID) == null) {
+		if (curr == null) {
 			System.out.println("delete did not find error mesasge");
 			return;
 		}
 
+		
+		
 		// otherwise delete all trees
-		IDTree.delete();
-		costTree.delete();
-		dateTree.delete();
-		keywordTree.delete();
+		IDTree.deleteBehavior(IDTree.getRoot(), curr.getSeminar().id(), curr.getSeminar());
+		costTree.deleteBehavior(costTree.getRoot(), curr.getSeminar().cost(), curr.getSeminar());
+		dateTree.deleteBehavior(dateTree.getRoot(), curr.getSeminar().date(), curr.getSeminar());
+		for (String word: curr.getSeminar().keywords())
+		{
+			keywordTree.keywordDeleteBehavior(keywordTree.getRoot(), word, curr.getSeminar());
+		}
+		
 
 		System.out.println("Record with ID " + ID + " successfully deleted from the database");
 	}
-q
 	
 	/*
 	 * Initial idea for search is implementing an array or hashmap that contains all
@@ -128,24 +137,22 @@ q
 	 * @param identifier2
 	 * @param identifier3
 	 */
-	public <T> void search(String treeToSearch, T identifier1, T identifier2, T identifier3) {
+	public void search(String treeToSearch, T identifier1, T identifier2, T identifier3) {
 		// find which tree we're searching through and search it
 		switch(treeToSearch)
 		{
 		case "ID":
-			if (IDTree.searchAndPrint(identifier1, identifier2, identifier3) == false)
-			{
-				System.out.println("Search FAILED -- There is no record with ID " + "identifier1");
-			}
+			IDTree.searchAndPrint((Integer) identifier1);
 			break;
 		case "cost":
-			costTree.searchAndPrint(identifier1, identifier2, identifier3);
+			costTree.searchAndPrintRange((Integer) identifier1, (Integer) identifier2, "costs");
 			break;
 		case "date":
-			dateTree.searchAndPrint(identifier1, identifier2, identifier3);
+			dateTree.searchAndPrintRange((String) identifier1, (String) identifier2, "dates");
 			break;
 		case "keyword":
-			keywordTree.searchAndPrint(identifier1, identifier2, identifier3);
+			System.out.println("Seminars matching keyword VT:");
+			keywordTree.searchAndPrintKeyword((String) identifier1);
 			break;
 		}
 	}

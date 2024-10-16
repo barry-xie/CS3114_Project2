@@ -42,9 +42,34 @@ public class BSTNode<T extends Comparable<T>> {
 		right = newRight;
 	}
 
+	/**
+	 * TODO: not sure what this is for yet, assumign this is for keywords
+	 * 
+	 * @param nodeWithDuplicateKey
+	 */
 	public void setNextDuplicate(BSTNode<T> nodeWithDuplicateKey)
 	{
 		duplicateNode = nodeWithDuplicateKey;
+	}
+	
+	/**
+	 * setter for seminarKey
+	 * 
+	 * @param newKey this is the new Key
+	 */
+	public void setSeminarKey(T newKey)
+	{
+		this.seminarKey = newKey;
+	}
+	
+	/**
+	 * setter for seminar
+	 * 
+	 * @param newSeminar this is the new Seminar
+	 */
+	public void setSeminar(Seminar newSeminar)
+	{
+		this.seminar = newSeminar;
 	}
 	
 	/**

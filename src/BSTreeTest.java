@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import student.TestCase;
 
-public class BSTreeTest extends TestCase{
+public class BSTreeTest<T extends Comparable<T>> extends TestCase{
 	private BSTree<Integer> intTree;
 	private BSTNode<Integer> node1;
 	private BSTNode<Integer> node2;
@@ -58,36 +58,102 @@ public class BSTreeTest extends TestCase{
 		assertTrue(node2.getLeft().getDuplicateNode() != null);
 	}
 
-//	@Test
-//	public void testBSTreeBSTNode() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//
-//
-//	@Test
-//	public void testDelete() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	public void testSearch() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
+	@Test
+	public void testDeleteNullBehavior() {
+		BSTNode<Integer> curr = intTree.deleteBehavior(intTree.getRoot(), 1);
+		assertTrue(curr == null);
+	}
+	
+	@Test
+	public void testDeleteBehavior() {
+		intTree.insert(intTree.getRoot(), node2);
+		intTree.insert(intTree.getRoot(), node1);
+		intTree.insert(intTree.getRoot(), node3);
+		intTree.insert(intTree.getRoot(), node5);
+		intTree.insert(intTree.getRoot(), node4);
+		assertEquals(intTree.getNumberOfNodes(), 5);
+		
+		intTree.deleteBehavior(intTree.getRoot(), 4);
+		assertEquals(intTree.getNumberOfNodes(), 4);
+		assertTrue(intTree.getRoot().getRight().getRight().getLeft() == null);
+		
+		intTree.insert(intTree.getRoot(), node4);
+		intTree.deleteBehavior(intTree.getRoot(), 5);
+		assertEquals(intTree.getNumberOfNodes(), 4);
+		assertTrue(intTree.getRoot().getRight().getRight().getSeminarKey() == 4);
+		//intTree.print();
+		
+		intTree.deleteBehavior(intTree.getRoot(), 2);
+		intTree.print();
+		assertTrue(intTree.getRoot().getSeminarKey() == 1);
+		assertTrue(intTree.getRoot().getRight().getSeminarKey() == 3);
+		assertEquals(intTree.getNumberOfNodes(), 3);
+		
+	}
+
+	@Test
+	public void testSearch() {
+		assertTrue(intTree.search(intTree.getRoot(), 1) == null);
+		intTree.insert(intTree.getRoot(), node2);
+		intTree.insert(intTree.getRoot(), node1);
+		intTree.insert(intTree.getRoot(), node3);
+		intTree.insert(intTree.getRoot(), node5);
+		intTree.insert(intTree.getRoot(), node4);
+		assertTrue(intTree.search(intTree.getRoot(), 2) == node2);
+		assertTrue(intTree.search(intTree.getRoot(), 1) == node1);
+		assertTrue(intTree.search(intTree.getRoot(), 10) == null);
+	}
+
 //	@Test
 //	public void testSearchAndPrint() {
 //		fail("Not yet implemented"); // TODO
 //	}
 //
-//	@Test
-//	public void testPrint() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
+	
+	@Test
+	public void testPrintSimple() {
+		intTree.insert(intTree.getRoot(), node2);
+		intTree.print();
+	}
+	
+	@Test
+	public void testPrintMedium() {
+		intTree.insert(intTree.getRoot(), node2);
+		intTree.insert(intTree.getRoot(), node1);
+		intTree.insert(intTree.getRoot(), node3);
+		assertEquals(intTree.getHeight(intTree.getRoot()), 1);
+		intTree.print();
+	}
+	
+	@Test
+	public void testPrintAdvanced() {
+		intTree.insert(intTree.getRoot(), node2);
+		intTree.insert(intTree.getRoot(), node1);
+		intTree.insert(intTree.getRoot(), node3);
+		intTree.insert(intTree.getRoot(), node5);
+		intTree.insert(intTree.getRoot(), node4);
+		intTree.print();
+	}
+
 //	@Test
 //	public void testGetNumberOfNodes() {
 //		fail("Not yet implemented"); // TODO
 //	}
 
+	public void testGetHeight()
+	{
+		assertEquals(intTree.getHeight(intTree.getRoot()), -1);
+		
+		intTree.insert(intTree.getRoot(), node2);
+		assertEquals(intTree.getHeight(intTree.getRoot()), 0);
+		
+		intTree.insert(intTree.getRoot(), node1);
+		assertEquals(intTree.getHeight(intTree.getRoot()), 1);
+		intTree.insert(intTree.getRoot(), node3);
+		assertEquals(intTree.getHeight(intTree.getRoot()), 1);
+		intTree.insert(intTree.getRoot(), node5);
+		assertEquals(intTree.getHeight(intTree.getRoot()), 2);
+		intTree.insert(intTree.getRoot(), node4);
+		assertEquals(intTree.getHeight(intTree.getRoot()), 3);
+	}
 }
