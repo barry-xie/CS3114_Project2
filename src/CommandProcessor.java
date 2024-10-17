@@ -11,8 +11,8 @@ import java.io.FileNotFoundException;
  * @author Barry Xie
  * @version 2024.12.02
  */
-public class CommandProcessor {
-    private Controller myController;
+public class CommandProcessor<T extends Comparable<T>> {
+    private Controller<T> myController;
 
     /**
      * constructor
@@ -21,7 +21,7 @@ public class CommandProcessor {
      *            the controller that is being passed in to
      *            call commands from
      */
-    public CommandProcessor(Controller providedController) {
+    public CommandProcessor(Controller<T> providedController) {
         myController = providedController;
     }
 
@@ -52,6 +52,7 @@ public class CommandProcessor {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void extractAndProcessinstruction(String line, Scanner sc) {
         Pattern pattern = Pattern.compile("(insert|delete|search|print)\\s*(.*)");
         Matcher matcher = pattern.matcher(line);
@@ -120,21 +121,30 @@ public class CommandProcessor {
                 switch (treeToSearch) {
                 case "ID":
                 	int ID = Integer.parseInt(searchParameters);
-                	myController.search("ID", ID, null, null);
+                	myController.search("ID", (T)Integer.valueOf(ID), null, null);
+                	break;
                 case "keyword":
-                	myController.search()
+                    String keyword = searchParameters;
+                	myController.search("keyword", (T)keyword, null, null);
                 	break;
                 case "cost":
+                    String[] costs = searchParameters.split("\\s+");
+                    myController.search("cost", (T)costs[1], (T)costs[2], null);
+                    break;
                 case "date":
+                    String[] dates = searchParameters.split("\\s+");
+                    myController.search("cost", (T)dates[1], (T)dates[2], null);
                 	break;
                 case "location":
+                    String[] locations = searchParameters.split("\\s+");
+                    //TODO: this needs to be implemented in controller
+                    myController.search("location", (T)locations[1], (T)locations[2], (T)locations[3]);
+                    break;
                 }
-                
-                myController.search(type);
             }
             break;
         case "print":
-            //Pattern printPattern = Pattern.compile("(artist|song|graph)");
+            Pattern printPattern = Pattern.compile("(ID|cost|date|keyword|location)");
             matcher = printPattern.matcher(arguments);
 
             if (matcher.find()) {

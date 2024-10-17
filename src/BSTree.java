@@ -144,7 +144,7 @@ public class BSTree<T extends Comparable<T>> {
 			BSTNode<T> succ = getMax(root.getLeft());
 			root.setSeminarKey(succ.getSeminarKey());
 			root.setSeminar(succ.getSeminar());
-			root.setLeft(deleteBehavior(root.getLeft(), succ.getSeminarKey(), seminarToDelete));
+			root.setLeft(keywordDeleteBehavior(root.getLeft(), succ.getSeminarKey(), seminarToDelete));
 		}
 		return root;
 	}
@@ -158,7 +158,7 @@ public class BSTree<T extends Comparable<T>> {
 	 * 
 	 * @param root
 	 */
-	public BSTNode<T> deleteBehavior(BSTNode<T> root, T keyToDelete, Seminar seminarToDelete) {
+	public BSTNode<T> deleteBehavior(BSTNode<T> root, T keyToDelete) {
 		if (root == null) {
 			return root;
 		}
@@ -166,9 +166,9 @@ public class BSTree<T extends Comparable<T>> {
 		int comparison = root.getSeminarKey().compareTo(keyToDelete);
 
 		if (comparison > 0) {
-			root.setLeft(deleteBehavior(root.getLeft(), keyToDelete, seminarToDelete));
+			root.setLeft(deleteBehavior(root.getLeft(), keyToDelete));
 		} else if (comparison < 0) {
-			root.setRight(deleteBehavior(root.getRight(), keyToDelete, seminarToDelete));
+			root.setRight(deleteBehavior(root.getRight(), keyToDelete));
 		} 
 		else {
 			if (root.getLeft() == null) {
@@ -185,7 +185,7 @@ public class BSTree<T extends Comparable<T>> {
 			BSTNode<T> succ = getMax(root.getLeft());
 			root.setSeminarKey(succ.getSeminarKey());
 			root.setSeminar(succ.getSeminar());
-			root.setLeft(deleteBehavior(root.getLeft(), succ.getSeminarKey(), seminarToDelete));
+			root.setLeft(deleteBehavior(root.getLeft(), succ.getSeminarKey()));
 		}
 		return root;
 	}

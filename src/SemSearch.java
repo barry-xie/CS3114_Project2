@@ -30,13 +30,23 @@
 //   letter of this restriction.
 
 
-public class SemSearch {
+public class SemSearch<T extends Comparable<T>> {
     /**
      * @param args
      *     Command line parameters
      */
     public static void main(String[] args) {
-        // This is the main file for the program.
-        Seminar dum = new Seminar();
+        if (args.length < 2) {
+            System.out.println("Error: Please provide the file path.");
+            return;
+
+        }
+
+        int worldSize = Integer.parseInt(args[0]);
+        Controller<T> myController = new Controller<T>();
+
+        CommandProcessor<T> process = new CommandProcessor<T>(myController);
+        process.beginParsingByLine(args[1]);
+
     }
 }

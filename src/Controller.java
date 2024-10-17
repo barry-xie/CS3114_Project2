@@ -109,9 +109,9 @@ public class Controller<T extends Comparable<T>> {
 		
 		
 		// otherwise delete all trees
-		IDTree.deleteBehavior(IDTree.getRoot(), curr.getSeminar().id(), curr.getSeminar());
-		costTree.deleteBehavior(costTree.getRoot(), curr.getSeminar().cost(), curr.getSeminar());
-		dateTree.deleteBehavior(dateTree.getRoot(), curr.getSeminar().date(), curr.getSeminar());
+		IDTree.deleteBehavior(IDTree.getRoot(), curr.getSeminar().id());
+		costTree.deleteBehavior(costTree.getRoot(), curr.getSeminar().cost());
+		dateTree.deleteBehavior(dateTree.getRoot(), curr.getSeminar().date());
 		for (String word: curr.getSeminar().keywords())
 		{
 			keywordTree.keywordDeleteBehavior(keywordTree.getRoot(), word, curr.getSeminar());
