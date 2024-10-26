@@ -43,9 +43,9 @@ public class SemSearch<T extends Comparable<T>> {
         }
 
         int worldSize = Integer.parseInt(args[0]);
-        Controller<T> myController = new Controller<T>();
+        Controller myController = new Controller();
 
-        CommandProcessor<T> process = new CommandProcessor<T>(myController);
+        CommandProcessor process = new CommandProcessor(myController);
         process.beginParsingByLine(args[1]);
 
     }

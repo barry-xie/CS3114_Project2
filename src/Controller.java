@@ -8,9 +8,8 @@ import java.util.List;
  * 
  * @author Barry Xie
  * @version 2024.9.10
- * @param <T>
  */
-public class Controller<T extends Comparable<T>> {
+public class Controller {
 	private BSTree<Integer> IDTree;
 	private BSTree<Integer> costTree;
 	private BSTree<String> dateTree;
@@ -137,22 +136,22 @@ public class Controller<T extends Comparable<T>> {
 	 * @param identifier2
 	 * @param identifier3
 	 */
-	public void search(String treeToSearch, T identifier1, T identifier2, T identifier3) {
+	public void search(String treeToSearch, String identifier1, String identifier2, String identifier3) {
 		// find which tree we're searching through and search it
 		switch(treeToSearch)
 		{
 		case "ID":
-			IDTree.searchAndPrint((Integer) identifier1);
+			IDTree.searchAndPrint(Integer.parseInt(identifier1));
 			break;
 		case "cost":
-			costTree.searchAndPrintRange((Integer) identifier1, (Integer) identifier2, "costs");
+			costTree.searchAndPrintRange(Integer.parseInt(identifier1), Integer.parseInt(identifier2), "costs");
 			break;
 		case "date":
-			dateTree.searchAndPrintRange((String) identifier1, (String) identifier2, "dates");
+			dateTree.searchAndPrintRange(identifier1, identifier2, "dates");
 			break;
 		case "keyword":
 			System.out.println("Seminars matching keyword VT:");
-			keywordTree.searchAndPrintKeyword((String) identifier1);
+			keywordTree.searchAndPrintKeyword(identifier1);
 			break;
 		}
 	}

@@ -11,8 +11,8 @@ import java.io.FileNotFoundException;
  * @author Barry Xie
  * @version 2024.12.02
  */
-public class CommandProcessor<T extends Comparable<T>> {
-    private Controller<T> myController;
+public class CommandProcessor {
+    private Controller myController;
 
     /**
      * constructor
@@ -21,7 +21,7 @@ public class CommandProcessor<T extends Comparable<T>> {
      *            the controller that is being passed in to
      *            call commands from
      */
-    public CommandProcessor(Controller<T> providedController) {
+    public CommandProcessor(Controller providedController) {
         myController = providedController;
     }
 
@@ -120,25 +120,25 @@ public class CommandProcessor<T extends Comparable<T>> {
                 
                 switch (treeToSearch) {
                 case "ID":
-                	int ID = Integer.parseInt(searchParameters);
-                	myController.search("ID", (T)Integer.valueOf(ID), null, null);
+                	String ID = searchParameters;
+                	myController.search("ID", ID, null, null);
                 	break;
                 case "keyword":
                     String keyword = searchParameters;
-                	myController.search("keyword", (T)keyword, null, null);
+                	myController.search("keyword", keyword, null, null);
                 	break;
                 case "cost":
                     String[] costs = searchParameters.split("\\s+");
-                    myController.search("cost", (T)costs[1], (T)costs[2], null);
+                    myController.search("cost", costs[1], costs[2], null);
                     break;
                 case "date":
                     String[] dates = searchParameters.split("\\s+");
-                    myController.search("cost", (T)dates[1], (T)dates[2], null);
+                    myController.search("cost", dates[1], dates[2], null);
                 	break;
                 case "location":
                     String[] locations = searchParameters.split("\\s+");
                     //TODO: this needs to be implemented in controller
-                    myController.search("location", (T)locations[1], (T)locations[2], (T)locations[3]);
+                    myController.search("location", locations[1], locations[2], locations[3]);
                     break;
                 }
             }
