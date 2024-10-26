@@ -1,0 +1,5 @@
+Successfully inserted record with ID 1729
+ID: 1729, Title: Seminar Title
+Date: 2405231000, Length: 75, X: 15, Y: 33, Cost: 125
+Description: This is a great seminar
+Keywords: Good, Bad, Ugly

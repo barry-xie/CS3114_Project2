@@ -1,0 +1,5 @@
+insert 1729
+Seminar Title
+2405231000 75 15 33 125
+Good Bad Ugly
+This is a great seminar

@@ -95,5 +95,34 @@ public class SemSearchTest extends TestCase {
         assertFuzzyEquals(expectedOutput, actualOutput);
 
  }
+    
+    /**
+     * Example 2: This method runs on a command sample IO file You will write
+     * similar test cases using different text files
+     *
+     * @throws Exception
+     */
+    public void testSampleIOInsert() throws Exception {
+        // Setting up all the parameters
+        String[] args = new String[2];
+        args[0] = "10";
+        args[1] = "solutionTestData/P2_insertDebug.txt";
+
+        // Invoke main method of our Graph Project
+        SemSearch.main(args);
+
+        // Actual output from your System console
+        String actualOutput = systemOut().getHistory();
+
+        // Expected output from file
+        String expectedOutput = readFile(
+            "solutionTestData/P2_insertOutputDebug.txt");
+
+        // Compare the two outputs
+        // TODO: uncomment the following line
+        // once you have implemented your project
+        assertFuzzyEquals(expectedOutput, actualOutput);
+
+ }
 }
 

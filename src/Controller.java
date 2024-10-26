@@ -21,10 +21,10 @@ public class Controller {
 	 * @param size The initial capacity of the hash table.
 	 */
 	public Controller() {
-		IDTree = new BSTree<>();
-		costTree = new BSTree<>();
-		dateTree = new BSTree<>();
-		keywordTree = new BSTree<>();
+		setIDTree(new BSTree<>());
+		setCostTree(new BSTree<>());
+		setDateTree(new BSTree<>());
+		setKeywordTree(new BSTree<>());
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Controller {
 		// check if seminar is already in system
 		// could split this off before reading seminar info for optimal runtime/space
 		// efficiency
-		if (IDTree != null && IDTree.search(IDTree.getRoot(), ID) != null) {
+		if (getIDTree().search(getIDTree().getRoot(), ID) != null) {
 			System.out.println("Insert FAILED - There is already a record with ID " + ID);
 			return;
 		}
@@ -77,12 +77,12 @@ public class Controller {
 		Seminar current = new Seminar(ID, title, dateAndTime, length, x, y, cost, keywordList, description);
 		
 		// then add it to all relevant trees
-		IDTree.createNodeAndInsert(current, ID);
-		costTree.createNodeAndInsert(current, cost);
-		dateTree.createNodeAndInsert(current, dateAndTime);
+		getIDTree().createNodeAndInsert(current, ID);
+		getCostTree().createNodeAndInsert(current, cost);
+		getDateTree().createNodeAndInsert(current, dateAndTime);
 		for (int i = 0; i < keywordList.length; i++)
 		{
-			keywordTree.createNodeAndInsert(current, keywordList[i]);
+			getKeywordTree().createNodeAndInsert(current, keywordList[i]);
 		}
 
 		System.out.println("Successfully inserted record with ID " + ID);
@@ -97,7 +97,7 @@ public class Controller {
 	 * @param ID
 	 */
 	public void delete(int ID) {
-		BSTNode<Integer> curr = IDTree.search(IDTree.getRoot(), ID);
+		BSTNode<Integer> curr = getIDTree().search(getIDTree().getRoot(), ID);
 		
 		// if seminar doesnt exist
 		if (curr == null) {
@@ -108,12 +108,12 @@ public class Controller {
 		
 		
 		// otherwise delete all trees
-		IDTree.deleteBehavior(IDTree.getRoot(), curr.getSeminar().id());
-		costTree.deleteBehavior(costTree.getRoot(), curr.getSeminar().cost());
-		dateTree.deleteBehavior(dateTree.getRoot(), curr.getSeminar().date());
+		getIDTree().deleteBehavior(getIDTree().getRoot(), curr.getSeminar().id());
+		getCostTree().deleteBehavior(getCostTree().getRoot(), curr.getSeminar().cost());
+		getDateTree().deleteBehavior(getDateTree().getRoot(), curr.getSeminar().date());
 		for (String word: curr.getSeminar().keywords())
 		{
-			keywordTree.keywordDeleteBehavior(keywordTree.getRoot(), word, curr.getSeminar());
+			getKeywordTree().keywordDeleteBehavior(getKeywordTree().getRoot(), word, curr.getSeminar());
 		}
 		
 
@@ -141,17 +141,17 @@ public class Controller {
 		switch(treeToSearch)
 		{
 		case "ID":
-			IDTree.searchAndPrint(Integer.parseInt(identifier1));
+			getIDTree().searchAndPrint(Integer.parseInt(identifier1));
 			break;
 		case "cost":
-			costTree.searchAndPrintRange(Integer.parseInt(identifier1), Integer.parseInt(identifier2), "costs");
+			getCostTree().searchAndPrintRange(Integer.parseInt(identifier1), Integer.parseInt(identifier2), "costs");
 			break;
 		case "date":
-			dateTree.searchAndPrintRange(identifier1, identifier2, "dates");
+			getDateTree().searchAndPrintRange(identifier1, identifier2, "dates");
 			break;
 		case "keyword":
 			System.out.println("Seminars matching keyword VT:");
-			keywordTree.searchAndPrintKeyword(identifier1);
+			getKeywordTree().searchAndPrintKeyword(identifier1);
 			break;
 		}
 	}
@@ -168,17 +168,49 @@ public class Controller {
 		switch(treeToPrint)
 		{
 		case "ID":
-			IDTree.print();
+			getIDTree().print();
 			break;
 		case "cost":
-			costTree.print();
+			getCostTree().print();
 			break;
 		case "date":
-			dateTree.print();
+			getDateTree().print();
 			break;
 		case "keyword":
-			keywordTree.print();
+			getKeywordTree().print();
 			break;
 		}
 	}
+
+    public BSTree<Integer> getIDTree() {
+        return IDTree;
+    }
+
+    public void setIDTree(BSTree<Integer> iDTree) {
+        IDTree = iDTree;
+    }
+
+    public BSTree<Integer> getCostTree() {
+        return costTree;
+    }
+
+    public void setCostTree(BSTree<Integer> costTree) {
+        this.costTree = costTree;
+    }
+
+    public BSTree<String> getDateTree() {
+        return dateTree;
+    }
+
+    public void setDateTree(BSTree<String> dateTree) {
+        this.dateTree = dateTree;
+    }
+
+    public BSTree<String> getKeywordTree() {
+        return keywordTree;
+    }
+
+    public void setKeywordTree(BSTree<String> keywordTree) {
+        this.keywordTree = keywordTree;
+    }
 }
